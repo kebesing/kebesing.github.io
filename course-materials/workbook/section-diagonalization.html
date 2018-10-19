@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--* Generated from MathBook XML source *-->
+<!--*    on 2016-10-04T22:24:37-05:00    *-->
+<!--*                                    *-->
+<!--*   http://mathbook.pugetsound.edu   *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Diagonalizing Matrices</title>
+<meta name="Keywords" content="Authored in MathBook XML">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/javascript" src="https://sagecell.sagemath.org/static/jquery.min.js"></script><script type="text/x-mathjax-config">
+// contrib directory for accessibility menu, moot after v2.6+?
+MathJax.Ajax.config.path["Contrib"] = "https://cdn.mathjax.org/mathjax/contrib";
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']],
+    },
+    TeX: {
+        // [Contrib]accessibility menu moot after v2.6+?
+        extensions: ["AMSmath.js", "AMSsymbols.js", "extpfeil.js", "autobold.js", "https://aimath.org/mathbook/mathjaxknowl.js", "[Contrib]/a11y/accessibility-menu.js", ],
+        equationNumbers: { autoNumber: "none",
+                           useLabelIds: true,
+                           // JS comment, XML CDATA protect XHTML quality of file
+                           // if removed in XSL, use entities
+                           //<![CDATA[
+                           formatID: function (n) {return String(n).replace(/[:'"<>&]/g,"")},
+                           //]]>
+                         },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    "HTML-CSS": {
+        scale: 88,
+    },
+});
+    </script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script><script type="text/javascript" src="https://sagecell.sagemath.org/embedded_sagecell.js"></script><script>$(function () {
+    // Make *any* div with class 'sagecell-sage' an executable Sage cell
+    // Their results will be linked, only within language type
+    sagecell.makeSagecell({inputLocation: 'div.sagecell-sage',
+                           linked: true,
+                           languages: ['sage'],
+                           evalButtonText: 'Evaluate Sage Code'});
+});
+</script><link href="https://aimath.org/knowlstyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="https://aimath.org/knowl.js"></script><script src="https://aimath.org/mathbook/js/lib/jquery.sticky.js"></script><script src="https://aimath.org/mathbook/js/lib/jquery.espy.min.js"></script><script src="https://aimath.org/mathbook/js/Mathbook.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href="https://aimath.org/mathbook/stylesheets/mathbook-3.css" rel="stylesheet" type="text/css">
+<link href="https://aimath.org/mathbook/mathbook-add-on.css" rel="stylesheet" type="text/css">
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<div style="display:none;">\(\newcommand{\augmatrix}[2]{\left(\begin{array}{@{}#1 |c@{}} #2 \end{array}\right)}
+\newcommand{\lt}{ &lt; }
+\newcommand{\gt}{ &gt; }
+\newcommand{\amp}{ &amp; }
+\)</div>
+<header id="masthead"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><span class="title">Math 2500: Linear Algebra</span></h1>
+<p class="byline"></p>
+</div>
+</div></div>
+<nav id="primary-navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active">Contents</button><div class="tree-nav toolbar toolbar-divisor-3">
+<a class="previous-button toolbar-item button" href="section-eigenvectors.html">Previous</a><a class="up-button button toolbar-item" href="chapter-eigendata-and-svd.html">Up</a><a class="next-button button toolbar-item" href="section-spectral-theorem.html">Next</a>
+</div>
+<button class="sidebar-right-toggle-button button active">Annotations</button>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="section-eigenvectors.html">Previous</a><a class="up-button button toolbar-item" href="chapter-eigendata-and-svd.html">Up</a><a class="next-button button toolbar-item" href="section-spectral-theorem.html">Next</a>
+</div>
+</div></nav></header><div class="page">
+<aside id="sidebar-left" class="sidebar"><div class="sidebar-content">
+<nav id="toc"><h2 class="link"><a href="index.html"><span class="title">Front Matter</span></a></h2>
+<ul>
+<li><a href="preface-1.html">Preface</a></li>
+<li><a href="acknowledgement-1.html">Acknowledgements</a></li>
+</ul>
+<h2 class="link"><a href="chapter-basic-objects.html"><span class="codenumber">1</span><span class="title">Vectors, the Dot Product, and Matrices</span></a></h2>
+<ul>
+<li><a href="vectors.html">Vectors</a></li>
+<li><a href="start-sage.html">Getting Started with SageMath</a></li>
+<li><a href="dot-product.html">The Dot Product</a></li>
+<li><a href="matrices.html">Matrices</a></li>
+<li><a href="basic-objects-going-further.html">Going Further with the Basic Objects</a></li>
+</ul>
+<h2 class="link"><a href="chapter-2.html"><span class="codenumber">2</span><span class="title">Linear Equations</span></a></h2>
+<ul>
+<li><a href="three-pictures.html">Three Geometric Models</a></li>
+<li><a href="elimination.html">Solving Systems</a></li>
+<li><a href="matrix-elimination.html">Elimination using Matrices</a></li>
+<li><a href="lin-eq-going-further-1.html">Going Further with Elimination</a></li>
+<li><a href="matrix-algebra.html">Matrix Algebra</a></li>
+<li><a href="inverse.html">Matrix Inverses</a></li>
+<li><a href="lu-decomposition.html">The \(LU\) Decomposition</a></li>
+<li><a href="permutations.html">Permutation Matrices</a></li>
+<li><a href="lin-eq-gf2.html">Matrix Algebra: Going Further</a></li>
+</ul>
+<h2 class="link"><a href="chapter-subspaces.html"><span class="codenumber">3</span><span class="title">Vector Spaces and Subspaces</span></a></h2>
+<ul>
+<li><a href="vector-spaces.html">Subspaces of \(\mathbb{R}^n\)</a></li>
+<li><a href="nullspace.html">The Nullspace</a></li>
+<li><a href="rank.html">Rank and the RREF</a></li>
+<li><a href="complete-solution.html">Solving a System</a></li>
+<li><a href="soln-gf.html">Going Further with Solving Systems</a></li>
+<li><a href="basis.html">Bases</a></li>
+<li><a href="four-subspaces.html">The Four Subspaces</a></li>
+<li><a href="ftla-gf.xml.html">Going Further with the Fundamental Theorem</a></li>
+</ul>
+<h2 class="link"><a href="chapter-orthogonality.html"><span class="codenumber">4</span><span class="title">Orthogonality</span></a></h2>
+<ul>
+<li><a href="section-ftla2.html">Orthogonality and the Four Subspaces</a></li>
+<li><a href="section-projections.html">Projections Onto Subspaces</a></li>
+<li><a href="section-gf-proj.html">Going Further: Projections</a></li>
+<li><a href="section-least-squares.html">Approximate Solutions: Least Squares</a></li>
+<li><a href="section-gram-schmidt.html">Orthonormal Bases and Gram-Schmidt</a></li>
+<li><a href="section-gf-ls-gs.html">Going Further: Least Squares and Gram-Schmidt</a></li>
+</ul>
+<h2 class="link"><a href="chapter-determinants.html"><span class="codenumber">5</span><span class="title">Determinants</span></a></h2>
+<ul>
+<li><a href="section-det-properties.html">Properties of the Determinant</a></li>
+<li><a href="section-det-computation.html">Computing Determinants</a></li>
+<li><a href="section-det-gf.html">Going Further: The Determinant</a></li>
+</ul>
+<h2 class="link active"><a href="chapter-eigendata-and-svd.html"><span class="codenumber">6</span><span class="title">Eigendata and the Singular Value decomposition</span></a></h2>
+<ul>
+<li><a href="section-eigenvectors.html">Eigenvectors and Eigenvalues</a></li>
+<li><a href="section-diagonalization.html" class="active">Diagonalizing Matrices</a></li>
+<li><a href="section-spectral-theorem.html">The Spectral Theorem</a></li>
+<li><a href="section-gf-eigendata.html">Going Further with Eigendata</a></li>
+<li><a href="section-svd.html">Singular Value Decomposition</a></li>
+<li><a href="section-gf-svd.html">Going Further with the SVD</a></li>
+</ul></nav><div class="extras"><nav><a class="feedback-link" href="https://docs.google.com/forms/d/1ru8ipyTKm2QsWRYILXilnle9dC7rr6j8a22hLdvCGKU/viewform?usp=send_form">Leave Feedback</a><a class="mathbook-link" href="https://mathbook.pugetsound.edu">Authored in MathBook XML</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://cdn.mathjax.org/mathjax/badge/badge.gif" border="0" alt="Powered by MathJax"></a></nav></div>
+</div></aside><main class="main"><div id="content" class="mathbook-content"><section class="section" id="section-diagonalization"><header title="Section 6.2 Diagonalizing Matrices"><h1 class="heading hide-type" alt="Section 6.2 Diagonalizing Matrices">
+<span class="type">Section</span><span class="codenumber">6.2</span><span class="title">Diagonalizing Matrices</span><a href="section-diagonalization.html" class="permalink">¶ permalink</a>
+</h1></header><section class="subsection" id="subsection-131"><header title="Subsection  The assignment"><h1 class="heading hide-type" alt="Subsection  The assignment">
+<span class="type">Subsection</span><span class="codenumber"></span><span class="title">The assignment</span>
+</h1></header><ul style="list-style-type: disc;">
+<li id="li-463"> Read section 6.2 of Strang (pages 298-307).</li>
+<li id="li-464"> Read the following.</li>
+<li id="li-465"> Prepare the items below for presentation.</li>
+</ul></section><section class="subsection" id="subsection-132"><header title="Subsection  Diagonalizing Matrices"><h1 class="heading hide-type" alt="Subsection  Diagonalizing Matrices">
+<span class="type">Subsection</span><span class="codenumber"></span><span class="title">Diagonalizing Matrices</span>
+</h1></header><p id="p-502">
+      The big result here is this:
+    </p>
+<article class="theorem-like" id="theorem-10"><h5 class="heading">
+<span class="type">Theorem</span><span class="codenumber">6.1</span>
+</h5>
+        Let \(A\) be an \(n\times n\) square matrix. Then the following
+        two conditions are equivalent:
+        <ul style="list-style-type: disc;">
+<li id="li-466">
+            There is a basis \(\beta= \{ v_1, v_2, \ldots, v_n \}\) for
+            \(\mathbb{R}^n\) consisting of eigenvectors for \(A\).
+          </li>
+<li id="li-467">
+            It is possible to find an invertible matrix \(S\) so that
+            \(A = S \Lambda S^{-1}\), where \(\Lambda\) is a diagonal
+            matrix whose entries are the eigenvalues of \(A\).
+          </li>
+</ul></article><p id="p-503">
+      The connection between the two conditions is that the matrix \(S\) has
+      as its columns the eigenvectors of \(A\). (In fact, that is really the
+      heart of the proof of this theorem. The rest is just details.)
+    </p>
+<p id="p-504">
+      If a matrix satisfies these two conditions, then we say it is
+      <em class="terminology">diagonalizable</em>. We should note right away that not all
+      matrices are diagonalizable. We have already seen examples of matrices
+      where the geometric multiplicity of an eigenvalue is less than the
+      algebraic multiplicity, like
+      \(A = \left( \begin{smallmatrix} 5 &amp; 1 \\ 0 &amp; 5 \end{smallmatrix}\right)\).
+      In this case, it becomes impossible to find a basis consisting of eigenvectors.
+    </p>
+<p id="p-505">
+      In a way, this allows us to see something interesting: maybe a matrix
+      really wants to be a diagonal matrix, but we are looking at the
+      transformation \(A\) using “the wrong basis.” By wrong, here I
+      mean that the standard basis is not the most convenient one, and another
+      one makes our lives easier.
+    </p></section><section class="subsection" id="subsection-133"><header title="Subsection  Sage and Diagonalization"><h1 class="heading hide-type" alt="Subsection  Sage and Diagonalization">
+<span class="type">Subsection</span><span class="codenumber"></span><span class="title">Sage and Diagonalization</span>
+</h1></header><p id="p-506">
+      Sage has built-in commands about diagonalization. We shall try a few out here.
+      We need a matrix to play with, so we take this one:
+    </p>
+<div class="sagecell-sage"><script type="text/x-sage">A = matrix(AA, 3,3, [1,2,3,4,5,6,7,8,-1])
+A.rank()
+</script></div>
+<p id="p-507">
+      We chose to define this matrix over AA because we need to find
+      roots of polynomials when looking for eigenvalues. AA is the
+      set of <em class="terminology">algebraic numbers</em>, which just means the collection of
+      all roots of polynomials with integer coefficients.
+    </p>
+<div class="sagecell-sage"><script type="text/x-sage">A.is_diagonalizable()
+</script></div>
+<p id="p-508">
+      Sage has a command for finding the eigenvector decomposition
+      \(A = S\Lambda S^{-1}\).
+    </p>
+<div class="sagecell-sage"><script type="text/x-sage">A.eigenmatrix_right()
+</script></div>
+<p id="p-509">
+      As you see, Sage returns a pair of matrices. One of them is diagonal, so that
+      is probably \(\Lambda\). We'll use tuple unpacking to assign the matrices to
+      sensible names.
+    </p>
+<div class="sagecell-sage"><script type="text/x-sage">Lambda, S = A.eigenmatrix_right()
+</script></div>
+<div class="sagecell-sage"><script type="text/x-sage">Lambda
+</script></div>
+<div class="sagecell-sage"><script type="text/x-sage">S
+</script></div>
+<p id="p-510">
+      Note that \(S\) has the eigenvectors of \(A\) as its columns, and the
+      corresponding eigenvalues are lined up as the diagonal entries of \(\Lambda\).
+    </p>
+<div class="sagecell-sage"><script type="text/x-sage">A.eigenvectors_right()
+</script></div>
+<p id="p-511">Anyway, now we can check that everything lines up correctly:</p>
+<div class="sagecell-sage"><script type="text/x-sage">S * Lambda * S.inverse()
+</script></div>
+<div class="sagecell-sage"><script type="text/x-sage">S * Lambda * S.inverse() == A
+</script></div></section><section class="subsection" id="subsection-134"><header title="Subsection  Questions for Section 6.2"><h1 class="heading hide-type" alt="Subsection  Questions for Section 6.2">
+<span class="type">Subsection</span><span class="codenumber"></span><span class="title">Questions for Section 6.2</span>
+</h1></header><article class="example-like" id="task-149"><h5 class="heading">
+<span class="type">Task</span><span class="codenumber">149</span><span class="title"></span>
+</h5>
+<p id="p-512">
+          Let \(e_1, e_2, e_3\) be the standard basis of \(\mathbb{R}^3\):
+          \begin{equation*}
+            e_1 = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}, \quad
+            e_2 = \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix}, \quad
+            e_3 = \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix}.
+          \end{equation*}
+          Make an example of an invertible \(3 \times 3\) matrix \(S\).
+          Write your matrix as a matrix of column vectors.
+          \begin{equation*}
+            S = \begin{pmatrix} | &amp; | &amp; | \\ v_1 &amp; v_2 &amp; v_3 \\
+             | &amp; | &amp; | \end{pmatrix}
+          \end{equation*}
+          How do you know that the set \(\{ Se_1, Se_2, Se_3 \}\) is a basis
+          for \(\mathbb{R}^3\)?
+        </p>
+<p id="p-513">
+          What is the connection between \(Se_1\), \(Se_2\), \(Se_3\),
+          \(S^{-1}v_1\), \(S^{-1}v_2\), \(S^{-1}v_3\) and the original
+          vectors \(e_1, e_2, e_3, v_1, v_2, v_3\)?
+        </p>
+<p id="p-514">
+          Finally, how do we use this to understand the way that the decomposition
+          \(A = S\Lambda S^{-1}\) works?
+        </p></article><article class="example-like" id="task-150"><h5 class="heading">
+<span class="type">Task</span><span class="codenumber">150</span><span class="title"></span>
+</h5>
+        Exercise 1 from section 6.2 of Strang.
+      </article><article class="example-like" id="task-151"><h5 class="heading">
+<span class="type">Task</span><span class="codenumber">151</span><span class="title"></span>
+</h5>
+        Exercise 2 from section 6.2 of Strang.
+      </article><article class="example-like" id="task-152"><h5 class="heading">
+<span class="type">Task</span><span class="codenumber">152</span><span class="title"></span>
+</h5>
+        Exercise 3 from section 6.2 of Strang.
+      </article><article class="example-like" id="task-153"><h5 class="heading">
+<span class="type">Task</span><span class="codenumber">153</span><span class="title"></span>
+</h5>
+        Exercise 13 from section 6.2 of Strang.
+      </article><article class="example-like" id="task-154"><h5 class="heading">
+<span class="type">Task</span><span class="codenumber">154</span><span class="title"></span>
+</h5>
+        Exercise 19 from section 6.2 of Strang.
+      </article></section></section></div></main>
+</div>
+</body>
+</html>
